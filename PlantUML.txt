@@ -4,3 +4,49 @@ www.plantuml.com/plantuml/uml/
 
 Documentation:
 http://plantuml.com/class-diagram
+
+@startuml
+
+class Aeroport{
+	
+}
+class Vol{
+date dateDep
+}
+class Compagnie{
+
+}
+class Humain{
+	String numPass
+}
+class Proposer{
+	bool ouvertReservation
+}
+class Classe{
+	String type
+}
+class Compose{
+	String rangée
+}
+class Reserve{
+	bool confirmé
+}
+class Passe{
+	Date dateArriv
+	Date dateDepart
+}
+class Ville{
+	String nom
+}
+
+Vol "*" - "1" Compagnie: Proposer
+(Vol, Compagnie) .. Proposer
+Vol "A..H" o-- "A..H" Classe: Compose
+(Vol, Classe) .. Compose
+Humain "*" -- "*" Compose: Reserve
+Reserve "*" -- "*" Humain: ReservePour
+(Humain, Compose) .. Reserve 
+Vol "*" -- "1" Aeroport: Passe
+(Vol, Aeroport) .. Passe
+Aeroport "*" -- "*" Ville : Desservie
+@enduml
