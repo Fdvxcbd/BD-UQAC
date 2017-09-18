@@ -10,7 +10,7 @@ class Aeroport{
 	
 }
 class Vol{
-date dateDep
+
 }
 class Compagnie{
 
@@ -25,7 +25,8 @@ class Classe{
 	String type
 }
 class Place{
-	String rangée
+	String Siege
+        int Siege
 }
 class Reserve{
 	bool confirmé
@@ -44,17 +45,17 @@ class Ville{
 	String nom
 }
 
+Reserve "*" -- "1" Humain: Acheteur
+Reserve "*" -- "1" Humain: Beneficiaire
+Vol "*" -- "*" Aeroport: Passe
+(Vol, Aeroport) .. Passe
 Vol "*" - "1" Compagnie: Proposer
 (Vol, Compagnie) .. Proposer
-Vol "A..H" o-- "A..H" Classe: Compose
+Vol "A..H" o-- "A..H" Classe: Humain
 (Vol, Classe) .. Place
-Humain "*" -- "*" Compose: Reserve
-Reserve "*" -- "1" Humain: ReservePour
-(Humain, Compose) .. Reserve 
-Vol "*" -- "1" Aeroport: Passe
-(Vol, Aeroport) .. Passe
 Passe <|-- Départ
 Passe <|-- Arrivée
 Passe <|-- Escale
 Aeroport "*" -- "*" Ville : Desservie
+Reserve "1" -- "0..1"Place
 @enduml
