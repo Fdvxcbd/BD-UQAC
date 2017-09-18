@@ -1,4 +1,4 @@
-Serveur:
+﻿Serveur:
 www.plantuml.com/plantuml/uml/
 
 
@@ -6,7 +6,6 @@ Documentation:
 http://plantuml.com/class-diagram
 
 @startuml
-
 class Aeroport{
 	
 }
@@ -25,15 +24,21 @@ class Proposer{
 class Classe{
 	String type
 }
-class Compose{
+class Place{
 	String rangée
 }
 class Reserve{
 	bool confirmé
 }
-class Passe{
-	Date dateArriv
-	Date dateDepart
+class Départ {
+}
+class Arrivée {
+}
+class Escale {
+	Time durée
+}
+abstract class Passe{
+	Datetime datetime
 }
 class Ville{
 	String nom
@@ -42,11 +47,14 @@ class Ville{
 Vol "*" - "1" Compagnie: Proposer
 (Vol, Compagnie) .. Proposer
 Vol "A..H" o-- "A..H" Classe: Compose
-(Vol, Classe) .. Compose
+(Vol, Classe) .. Place
 Humain "*" -- "*" Compose: Reserve
-Reserve "*" -- "*" Humain: ReservePour
+Reserve "*" -- "1" Humain: ReservePour
 (Humain, Compose) .. Reserve 
 Vol "*" -- "1" Aeroport: Passe
 (Vol, Aeroport) .. Passe
+Passe <|-- Départ
+Passe <|-- Arrivée
+Passe <|-- Escale
 Aeroport "*" -- "*" Ville : Desservie
 @enduml
