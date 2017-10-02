@@ -1,0 +1,118 @@
+Quels sont tous les vols ouverts de 
+Montréal à Paris entre le 25 décembre 2017 et le 12 janvier 2018 ?
+SELECT numero, compagnie.nom, depart
+FROM vol, aeroport a1, aeroport a2, ville_desservie v1, ville_desservie v2, ville vi1, ville vi2, compagnie
+WHERE vol.depart>='25/12/2017' AND vol.depart<='12/01/2018'
+and a1.id=vol.aeroport_depart and a2.id=vol.aeroport_arrive
+and v1.aeroport = a1.id and v2.aeroport = a2.id and v1.ville=
+vi1.id and v2.ville=vi2.id and vi1.nom='Montréal' and vi2.nom='Paris'
+and vol.compagnie=compagnie.id;
+--------------------------------------------------------------
+Quels sont les vols ouverts et sans escales entre Vancouver et 
+New York dont la date de départ est avant le 1 janvier 2018 ?
+SELECT numero, compagnie, depart
+FROM vol, aeroport a1, aeroport a2, ville_desservie v1, ville_desservie v2, ville vi1, ville vi2
+WHERE vol.depart<'01/01/2018'
+and a1.id=vol.aeroport_depart and a2.id=vol.aeroport_arrive
+and v1.aeroport = a1.id and v2.aeroport = a2.id and v1.ville=
+vi1.id and v2.ville=vi2.id and vi1.nom='Vancouver' and vi2.nom='New York'
+MINUS
+SELECT numero, compagnie, depart
+FROM escale e, vol
+WHERE e.vol = vol.id;
+--------------------------------------------------------------
+Quels sont les vols ouverts, du moins cher au plus cher, 
+pour lesquels il est possible de réserver 
+une place en classe business entre New York et Montréal ?
+SELECT numero, compagnie.nom, depart, Place.prix
+FROM vol, aeroport a1, aeroport a2, compagnie,
+ville_desservie v1, ville_desservie v2, 
+ville vi1, ville vi2, PLACE P, Classe c, infos_place i, statut s
+WHERE a1.id=vol.aeroport_depart and a2.id=vol.aeroport_arrive
+and v1.aeroport = a1.id and v2.aeroport = a2.id and v1.ville=
+vi1.id and v2.ville=vi2.id and vi1.nom='New York' 
+and vi2.nom='Montréal'
+and s.id = vol.statut and s.libelle='Ouvert Reservation' and 
+P.vol = vol.id and P.classe = C.id and C.libelle = 'Business'
+and vol.compagnie=compagnie.id;
+and place.place = i.id and i.disponible = 'T'
+GROUP BY numero, compagnie, depart
+ORDER BY Place.prix;
+--------------------------------------------------------------
+Quels sont les clients qui ont réservé un vol entre Paris 
+et New York en première classe depuis 2015 ?
+
+IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE 
+IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE 
+IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE 
+IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE 
+IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE IMPOSSIBLE 
+--------------------------------------------------------------
+Combien de places sont déjà réservées pour le vol numéro AC1520 
+à destination de La Havane le 25 décembre 2017 ?
+SELECT numero, compagnie, depart, COUNT(RS.VOL)
+FROM vol, aeroport a2, ville_desservie v2, ville vi2, 
+reservation_vol RS
+WHERE vol.depart='25/12/2017' AND vol.numero='AC1520'
+and a2.id=vol.aeroport_arrive
+and v2.aeroport = a2.id and v2.ville=vi2.id  
+and vi2.nom='La Havane' and RS.vol = vol.id
+GROUP BY numero, compagnie, depart;
+--------------------------------------------------------------
+Quels sont les clients qui ont une adresse aux USA ?
+SELECT UNIQUE(nom, prenom, pass.numero)
+FROM pays pa, Province_Pays pp, Personne P, Passeport pass, adresse_Personne ap, adresse a
+WHERE P.passeport = pass.id and p.id = ap.personne and ap.adresse
+=a.id and a.pays = pp.pays and a.province=pp.province
+and pp.pays = p.id and nom='USA';
+--------------------------------------------------------------
+Quel est le prix et la classe de la place la plus chère 
+à bord du vol AF2306 du 12 février 2018 ?
+SELECT prix, libelle
+FROM vol, PLACE P, Classe c,
+WHERE P.vol = vol.id and P.classe = C.id 
+and vol.numero = 'AF2306' and vol.depart='12/02/2018'
+and prix = (Select max(prix) from vol, place, 
+			where vol.id = place.vol and vol.numero='AF2306');
+--------------------------------------------------------------
+Quels sont tous les clients de France ayant une 
+réservation sur un vol pour Paris ?
+SELECT UNIQUE(nom, prenom, pass.numero)
+FROM vol, aeroport a2, ville_desservie v2, ville vi2
+Reservation_Personne rp, Reservation r, reservation_vol rv
+pays pa, Province_Pays pp, Personne P, Passeport pass, adresse_Personne ap, adresse a
+WHERE P.passeport = pass.id and p.id = ap.personne and ap.adresse
+=a.id and a.pays = pp.pays and a.province=pp.province
+and pp.pays = p.id and nom='France'
+and rp.personne = p.id and rp.reservation = r.id
+and r.id = rv.reservation and rv.vol = vol.id
+and a2.id=vol.aeroport_arrive
+and v2.aeroport = a2.id and v2.ville=vi2.id  
+and vi2.nom='Paris';
+--------------------------------------------------------------
+Quels sont tous les aéroports du Canada ?
+SELECT code_iota, ae.nom
+FROM aeroport ae, Ville_desservie vd, ville v, pays p
+WHERE ae.id = vd.aeroport AND vd.ville=v.id AND v.Pays=P.nom
+and Pays.nom='Canada';
+--------------------------------------------------------------
+Quels sont les compagnies aériennes qui proposent des 
+vols avec le moins d'escales ?
+SELECT c.nom
+From Compagnie cc
+where ((Select sum(e.escale) from compagnie c, vol, Escale e where cc.id=c.id and vol.compagnie=c.id and escale.vol=vol.id)
+/
+(Select sum(vol.id) from compagnie c, vol where cc.id=c.id and vol.compagnie=c.id))
+<AVG(((Select sum(e.escale) from vol, Escale e where escale.vol=vol.id)
+/
+(Select sum(vol.id) from vol)));
+
+
+
+
+
+
+
+
+
+
