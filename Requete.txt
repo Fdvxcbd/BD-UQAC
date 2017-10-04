@@ -60,7 +60,7 @@ and vi2.nom='La Havane' and RS.vol = vol.id
 GROUP BY numero, compagnie, depart;
 --------------------------------------------------------------
 Quels sont les clients qui ont une adresse aux USA ?
-SELECT UNIQUE(nom, prenom, pass.numero)
+SELECT DISTINCT(nom, prenom, pass.numero)
 FROM pays pa, Province_Pays pp, Personne P, Passeport pass, adresse_Personne ap, adresse a
 WHERE P.passeport = pass.id and p.id = ap.personne and ap.adresse
 =a.id and a.pays = pp.pays and a.province=pp.province

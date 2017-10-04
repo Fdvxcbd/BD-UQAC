@@ -1,10 +1,34 @@
--- set serveroutput on format wrapped;
---
--- DBMS_OUTPUT.put_line('Drop table if exist');
+DROP TABLE Telephone_Personne;
+DROP TABLE Reservation_Vol;
+DROP TABLE Reservation_Personne;
+DROP TABLE Reservation;
+DROP TABLE Etat_Reservation;
+DROP TABLE Adresse_Personne;
+DROP TABLE Personne;
+DROP TABLE Escale;
+DROP TABLE Place;
+DROP TABLE Vol;
+DROP TABLE Adresse;
+DROP TABLE Province_Pays;
+DROP TABLE Telephone;
+DROP TABLE Infos_Escale;
+DROP TABLE Classe;
+DROP TABLE Infos_Place;
+DROP TABLE Statut;
+DROP TABLE Type_Personne;
+DROP TABLE Compte;
+DROP TABLE Passport;
+DROP TABLE Province;
+DROP TABLE Ville_Desservie;
+DROP TABLE Ville;
+DROP TABLE Pays;
+DROP TABLE Compagnie_Aerienne;
+DROP TABLE Aeroport;
 
-/*======================== tables without foreign key ========================*/
+
+
 CREATE TABLE Aeroport (
-	ID        NUMBER,
+	ID        INTEGER,
 	CODE_IATA VARCHAR(3),
 	NOM       VARCHAR(100),
 
@@ -12,83 +36,76 @@ CREATE TABLE Aeroport (
 	CONSTRAINT Aeroport_code_iata_un UNIQUE(CODE_IATA)
 );
 
-CREATE TABLE Ville (
-	ID      NUMBER,
-	PAYS    NUMBER,
-	NOM     VARCHAR2(100),
-
-	CONSTRAINT Ville_pk PRIMARY KEY (ID)
-);
-
-CREATE TABLE Ville_Desservie (
-	AEROPORT NUMBER,
-	VILLE    NUMBER,
-
-	CONSTRAINT Ville_Desservie_PK PRIMARY KEY (AEROPORT, VILLE)
-);
-
 CREATE TABLE Compagnie_Aerienne (
-	ID  NUMBER,
-	NOM VARCHAR2(100),
+	ID  INTEGER,
+	NOM VARCHAR(100),
 
 	CONSTRAINT Compagnie_Aerienne_pk PRIMARY KEY (ID)
 );
 
 CREATE TABLE Pays (
-	ID  NUMBER,
-	NOM VARCHAR2(100),
+	ID  INTEGER,
+	NOM VARCHAR(100),
 
 	CONSTRAINT Pays_pk PRIMARY KEY (ID)
 );
 
+CREATE TABLE Ville (
+	ID      INTEGER,
+	PAYS    INTEGER,
+	NOM     VARCHAR(100),
+
+	CONSTRAINT Ville_pk PRIMARY KEY (ID)
+);
+
+CREATE TABLE Ville_Desservie (
+	AEROPORT INTEGER,
+	VILLE    INTEGER,
+
+	CONSTRAINT Ville_Desservie_PK PRIMARY KEY (AEROPORT, VILLE)
+);
+
 CREATE TABLE Province (
-	ID  NUMBER,
-	NOM VARCHAR2(100),
+	ID  INTEGER,
+	NOM VARCHAR(100),
 
 	CONSTRAINT Pays_pk PRIMARY KEY (ID)
 );
 
 CREATE TABLE Passport (
-	ID     NUMBER,
-	NUMERO VARCHAR2(12),
+	ID     INTEGER,
+	NUMERO VARCHAR(12),
 
 	CONSTRAINT Passport_pk PRIMARY KEY (ID),
 	CONSTRAINT Passport_no_un UNIQUE (NUMERO)
 );
 
 CREATE TABLE Compte (
-	ID       NUMBER,
-	COURRIEL VARCHAR2(100),
-	PASSWORD VARCHAR2(255),
+	ID       INTEGER,
+	COURRIEL VARCHAR(100),
+	PASSWORD VARCHAR(255),
 
 	CONSTRAINT Compte_pk PRIMARY KEY (ID)
 );
 
 CREATE TABLE Type_Personne (
-	ID      NUMBER,
-	TYPE    VARCHAR2(100),
+	ID      INTEGER,
+	TYPE    VARCHAR(100),
 
 	CONSTRAINT Type_Personne_pk PRIMARY KEY(id)
 );
 
-CREATE TABLE Etat_Reservation(
-	ID      NUMBER,
-	LIBELLE VARCHAR2(100),
-
-	CONSTRAINT Etat_Reservation_pk PRIMARY KEY(id)
-);
-
 CREATE TABLE Statut (
-	ID      NUMBER,
-	LIBELLE VARCHAR2(100),
+	ID      INTEGER,
+	LIBELLE VARCHAR(100),
 
 	CONSTRAINT Statut_pk PRIMARY KEY(ID)
 );
 
 CREATE TABLE Infos_Place (
-	ID          NUMBER,
+	ID          INTEGER,
 	RANGEE      CHAR(1),
-	SIEGE       NUMBER(2),
+	SIEGE       INTEGER(2),
 	DISPONIBLE  CHAR(1),
 
 	CONSTRAINT Infos_Place_pk PRIMARY KEY(ID),
@@ -96,14 +113,14 @@ CREATE TABLE Infos_Place (
 );
 
 CREATE TABLE Classe (
-	ID          NUMBER,
-	LIBELLE     VARCHAR2(100),
+	ID          INTEGER,
+	LIBELLE     VARCHAR(100),
 
 	CONSTRAINT Classe_pk PRIMARY KEY(ID)
 );
 
 CREATE TABLE Infos_Escale (
-	ID      NUMBER,
+	ID      INTEGER,
 	ARRIVEE DATE,
 	DEPART  DATE,
 
@@ -111,119 +128,122 @@ CREATE TABLE Infos_Escale (
 );
 
 CREATE TABLE Telephone (
-	ID          NUMBER,
-	CODE_PAYS   NUMBER(1),
-	CODE_REGION NUMBER(3),
-	NUMERO     NUMBER(7),
+	ID          INTEGER,
+	CODE_PAYS   INTEGER(1),
+	CODE_REGION INTEGER(3),
+	NUMERO     INTEGER(7),
 
 	CONSTRAINT Telephone_pk PRIMARY KEY (ID),
 	CONSTRAINT Telephone_numero_un UNIQUE (NUMERO)
 );
 
-/*======================== tables with foreign key ========================*/
-
 CREATE TABLE Province_Pays (
-	PAYS        NUMBER,
-	PROVINCE    NUMBER,
+	PAYS        INTEGER,
+	PROVINCE    INTEGER,
 
 	CONSTRAINT Province_Pays_pk PRIMARY KEY (PAYS, PROVINCE)
 );
 
 CREATE TABLE Adresse (
-	ID          NUMBER,
-	NUMERO      NUMBER,
+	ID          INTEGER,
+	NUMERO      INTEGER,
 	APP         CHAR(1),
-	RUE         VARCHAR2(255),
-	VILLE       VARCHAR2(255),
-	CODE_POSTAL VARCHAR2(6),
-	PAYS        NUMBER,
-	PROVINCE    NUMBER,
+	RUE         VARCHAR(255),
+	VILLE       VARCHAR(255),
+	CODE_POSTAL VARCHAR(6),
+	PAYS        INTEGER,
+	PROVINCE    INTEGER,
 
 	CONSTRAINT Adresse_pk PRIMARY KEY (ID)
 );
 
-CREATE TABLE Adresse_Personne (
-	ADRESSE     NUMBER,
-	PERSONNE    NUMBER,
-
-	CONSTRAINT Adresse_Personne_pk PRIMARY KEY (ADRESSE, PERSONNE)
-);
-
-CREATE TABLE Place (
-	VOL         NUMBER,
-	CLASSE      NUMBER,
-	PLACE       NUMBER,
-	PRIX        NUMBER(7,2),
-
-	CONSTRAINT Adresse_Personne_pk PRIMARY KEY (VOL, CLASSE, PLACE)
-);
-
-CREATE TABLE Escale (
-	VOL      NUMBER,
-	AEROPORT NUMBER,
-	ESCALE   NUMBER,
-
-	CONSTRAINT Escale_pk PRIMARY KEY (VOL, AEROPORT)
-);
-
 CREATE TABLE Vol (
-	ID              NUMBER,
-	NUMERO         VARCHAR2(15),
-	COMPAGNIE       NUMBER,
+	ID              INTEGER,
+	NUMERO         VARCHAR(15),
+	COMPAGNIE       INTEGER,
 	DEPART          DATE,
 	ARRIVEE         DATE,
-	AEROPORT_DEPART NUMBER,
-	AEROPORT_ARRIVE NUMBER,
-	STATUT          NUMBER,
+	AEROPORT_DEPART INTEGER,
+	AEROPORT_ARRIVE INTEGER,
+	STATUT          INTEGER,
 
 	CONSTRAINT Vol_pk PRIMARY KEY (ID),
 	CONSTRAINT Vol_numero_un UNIQUE (NUMERO)
 );
 
+CREATE TABLE Place (
+	VOL         INTEGER,
+	CLASSE      INTEGER,
+	PLACE       INTEGER,
+	PRIX        DECIMAL(7,2),
+
+	CONSTRAINT Adresse_Personne_pk PRIMARY KEY (VOL, CLASSE, PLACE)
+);
+
+CREATE TABLE Escale (
+	VOL      INTEGER,
+	AEROPORT INTEGER,
+	ESCALE   INTEGER,
+
+	CONSTRAINT Escale_pk PRIMARY KEY (VOL, AEROPORT)
+);
+
 CREATE TABLE Personne (
-	ID            NUMBER,
-	NOM           VARCHAR2(100),
-	PRENOM        VARCHAR2(100),
-	TYPE_PERSONNE NUMBER,
-	PASSEPORT     NUMBER,
-	COMPTE        NUMBER,
+	ID            INTEGER,
+	NOM           VARCHAR(100),
+	PRENOM        VARCHAR(100),
+	TYPE_PERSONNE INTEGER,
+	PASSEPORT     INTEGER,
+	COMPTE        INTEGER,
 
 	CONSTRAINT Personne_pk PRIMARY KEY (ID),
 	CONSTRAINT Personne_passport_un UNIQUE (PASSEPORT),
 	CONSTRAINT Personne_compte_un UNIQUE (COMPTE)
 );
 
-CREATE TABLE Reservation_Personne (
-	PERSONNE    NUMBER,
-	RESERVATION NUMBER,
+CREATE TABLE Adresse_Personne (
+	ADRESSE     INTEGER,
+	PERSONNE    INTEGER,
 
-	CONSTRAINT Reservation_Personne_pk PRIMARY KEY (PERSONNE, RESERVATION)
+	CONSTRAINT Adresse_Personne_pk PRIMARY KEY (ADRESSE, PERSONNE)
+);
+
+CREATE TABLE Etat_Reservation(
+	ID      INTEGER,
+	LIBELLE VARCHAR(100),
+
+	CONSTRAINT Etat_Reservation_pk PRIMARY KEY(id)
 );
 
 CREATE TABLE Reservation (
-	ID      NUMBER,
-	NUMERO  VARCHAR2(25),
+	ID      INTEGER,
+	NUMERO  VARCHAR(25),
 	DATE    DATE,
-	ETAT    NUMBER,
+	ETAT    INTEGER,
 
 	CONSTRAINT Reservation_pk PRIMARY KEY (ID)
 );
 
+CREATE TABLE Reservation_Personne (
+	PERSONNE    INTEGER,
+	RESERVATION INTEGER,
+
+	CONSTRAINT Reservation_Personne_pk PRIMARY KEY (PERSONNE, RESERVATION)
+);
+
 CREATE TABLE Reservation_Vol (
-	VOL         NUMBER,
-	RESERVATION NUMBER,
+	VOL         INTEGER,
+	RESERVATION INTEGER,
 
 	CONSTRAINT Reservation_Vol_pk PRIMARY KEY (VOL, RESERVATION)
 );
 
 CREATE TABLE Telephone_Personne(
-	PERSONNE    NUMBER,
-	TELEPHONE   NUMBER,
+	PERSONNE    INTEGER,
+	TELEPHONE   INTEGER,
 
 	CONSTRAINT Telephone_Personne_pk PRIMARY KEY (PERSONNE, TELEPHONE)
 );
-
-/*======================== constraints foreign keys ========================*/
 
 ALTER TABLE Ville_Desservie ADD CONSTRAINT Ville_Desservie_Aeroport_fk  FOREIGN KEY (AEROPORT)          REFERENCES Aeroport(ID);
 ALTER TABLE Ville_Desservie ADD CONSTRAINT Ville_Desservie_Ville_fk     FOREIGN KEY (VILLE)             REFERENCES Ville(ID);
@@ -249,4 +269,16 @@ ALTER TABLE Place           ADD CONSTRAINT Place_Infos_Place_fk         FOREIGN 
 ALTER TABLE Reservation     ADD CONSTRAINT Reservation_Etat_Reservation_fk FOREIGN KEY (ETAT)             REFERENCES Etat_Reservation(ID);
 ALTER TABLE Reservation_Personne ADD CONSTRAINT Reservation_Personne_Personne_fk FOREIGN KEY (PERSONNE) REFERENCES Personne(ID);
 ALTER TABLE Reservation_Personne ADD CONSTRAINT Reservation_Personne_Reservation_fk FOREIGN KEY (RESERVATION) REFERENCES Reservation(ID);
+
+
+
+
+
+
+
+
+
+
+
+
 
