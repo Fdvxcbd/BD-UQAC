@@ -31,6 +31,7 @@ INSERT INTO Compagnie_Aerienne(ID, NOM) VALUES(3, 'Compagnie 3');
 
 
 INSERT INTO Infos_Escale VALUES(1, '1950/02/13', '1950/02/13');
+INSERT INTO Infos_Escale VALUES(2, '1950/02/13', '1950/02/13');
 
 
 INSERT INTO Statut VALUES(1, 'Ouvert Reservation');
@@ -74,6 +75,7 @@ INSERT INTO Vol VALUES(11, 'yuk', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
 INSERT INTO Vol VALUES(12, 'yukyuk', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
 INSERT INTO Vol VALUES(13, 'toto', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
 INSERT INTO Vol VALUES(14, 'escale', 2, '2017/01/02', '2017/01/01', 6, 4, 1);
+INSERT INTO Vol VALUES(15, 'vc', 2, '2017/01/02', '2017/01/01', 6, 4, 1);
 
 
 INSERT INTO Place VALUES(8, 1, 2, 125);
@@ -94,16 +96,18 @@ INSERT INTO Escale VALUES(7, 1, 1);
 INSERT INTO Escale VALUES(6, 1, 1);
 INSERT INTO Escale VALUES(5, 1, 1);
 INSERT INTO Escale VALUES(1, 1, 1);
+INSERT INTO Escale VALUES(14, 5, 2);
 
 INSERT INTO Pays VALUES(1, 'Pays 1');
 INSERT INTO Pays VALUES(2, 'Pays 2');
-INSERT INTO Pays VALUES(3, 'Pays 3');
-INSERT INTO Pays VALUES(4, 'Pays 4');
+INSERT INTO Pays VALUES(3, 'France');
+INSERT INTO Pays VALUES(4, 'USA');
+INSERT INTO Pays VALUES(5, 'Canada');
 
 INSERT INTO Ville VALUES(1, 1, 'Ville 1 pays 1');
 INSERT INTO Ville VALUES(2, 2, 'Toulouse');
-INSERT INTO Ville VALUES(3, 3, 'Québec');
-INSERT INTO Ville VALUES(4, 1, 'Montréal');
+INSERT INTO Ville VALUES(3, 5, 'Québec');
+INSERT INTO Ville VALUES(4, 5, 'Montréal');
 INSERT INTO Ville VALUES(5, 1, 'New York City');
 INSERT INTO Ville VALUES(6, 1, 'Paris');
 INSERT INTO Ville VALUES(7, 4, 'Vancouver');
@@ -126,6 +130,10 @@ INSERT INTO Province_Pays VALUES(3, 1);
 INSERT INTO Adresse VALUES(1, 666, 'A', 'Rue 1', 'Ville X', 'ezf', 4, 2);
 INSERT INTO Adresse VALUES(2, 999, 'B', 'Rue 1', 'Ville X', 'ezf', 3, 1);
 
+INSERT INTO Adresse_Personne VALUES(1, 1);
+INSERT INTO Adresse_Personne VALUES(1, 3);
+INSERT INTO Adresse_Personne VALUES(2, 3);
+
 INSERT INTO Passport VALUES(1, 'Passeport 1');
 INSERT INTO Passport VALUES(2, 'Passeport 2');
 INSERT INTO Passport VALUES(3, 'Passeport 3');
@@ -143,8 +151,8 @@ INSERT INTO Compte VALUES(6, 'Lourdeur', 'Tp');
 INSERT INTO Type_Personne VALUES(1, 'Client');
 INSERT INTO Type_Personne VALUES(2, 'Esclave');
 
-INSERT INTO Personne VALUES(1, 'Momo', 'fez', 2, 1, 1);
-INSERT INTO Personne VALUES(2, 'client', 'sefesf', 1, 2, 2);
+INSERT INTO Personne VALUES(1, 'Momo', 'fez', 1, 1, 1);
+INSERT INTO Personne VALUES(2, 'client', 'sefesf', 2, 2, 2);
 INSERT INTO Personne VALUES(3, 'paris', 'sefesf', 1, 3, 3);
 INSERT INTO Personne VALUES(4, 'pasparis', 'sefesf', 1, 4, 4);
 INSERT INTO Personne VALUES(5, 'jesaispas', 'sefesf', 1, 5, 5);
@@ -158,36 +166,12 @@ INSERT INTO Etat_Reservation VALUES(1, 'Valide');
 INSERT INTO Etat_Reservation VALUES(2, 'Non Valide');
 
 INSERT INTO Reservation VALUES(1, 'ezfzf', '2016/01/25', 1);
+INSERT INTO Reservation VALUES(2, 'zaza', '2016/01/25', 1);
 
 INSERT INTO Reservation_Personne VALUES(6, 1);
+INSERT INTO Reservation_Personne VALUES(3, 2);
 
 INSERT INTO Reservation_Vol VALUES(10, 1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO Reservation_Vol VALUES(3, 1);
+INSERT INTO Reservation_Vol VALUES(3, 2);
+INSERT INTO Reservation_Vol VALUES(5, 2);
