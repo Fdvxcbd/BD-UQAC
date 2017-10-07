@@ -29,19 +29,15 @@ INSERT INTO Compagnie_Aerienne(ID, NOM) VALUES(1, 'Compagnie 1');
 INSERT INTO Compagnie_Aerienne(ID, NOM) VALUES(2, 'Compagnie 2');
 INSERT INTO Compagnie_Aerienne(ID, NOM) VALUES(3, 'Compagnie 3');
 
-
 INSERT INTO Infos_Escale VALUES(1, '1950/02/13', '1950/02/13');
 INSERT INTO Infos_Escale VALUES(2, '1950/02/13', '1950/02/13');
-
 
 INSERT INTO Statut VALUES(1, 'Ouvert Reservation');
 INSERT INTO Statut VALUES(2, 'Fermée Reservation');
 
-
 INSERT INTO Classe VALUES(1, 'Business');
 INSERT INTO Classe VALUES(2, 'Première classe');
 INSERT INTO Classe VALUES(3, 'Economique');
-
 
 INSERT INTO Infos_Place VALUES(1, 'A', 10, 'T');
 INSERT INTO Infos_Place VALUES(2, 'B', 11, 'T');
@@ -51,7 +47,6 @@ INSERT INTO Infos_Place VALUES(5, 'E', 14, 'T');
 INSERT INTO Infos_Place VALUES(6, 'F', 15, 'F');
 INSERT INTO Infos_Place VALUES(7, 'G', 42, 'F');
 
-
 INSERT INTO Aeroport VALUES(1, 'TLS', 'Toulouse');
 INSERT INTO Aeroport VALUES(2, 'QBC', 'Québec');
 INSERT INTO Aeroport VALUES(3, 'MTR', 'Montréal');
@@ -59,7 +54,6 @@ INSERT INTO Aeroport VALUES(4, 'NYC', 'New York City');
 INSERT INTO Aeroport VALUES(5, 'PRS', 'Paris');
 INSERT INTO Aeroport VALUES(6, 'VCV', 'Vancouver');
 INSERT INTO Aeroport VALUES(7, 'LHV', 'La Havane');
-
 
 INSERT INTO Vol VALUES(1, 'CA1520', 1, '2017/01/01', '2017/01/01', 1, 2, 1);
 INSERT INTO Vol VALUES(2, 'AF2306', 2, '2018/02/12', '2018/02/12', 1, 2, 1);
@@ -76,7 +70,7 @@ INSERT INTO Vol VALUES(12, 'yukyuk', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
 INSERT INTO Vol VALUES(13, 'toto', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
 INSERT INTO Vol VALUES(14, 'escale', 2, '2017/01/02', '2017/01/01', 6, 4, 1);
 INSERT INTO Vol VALUES(15, 'vc', 2, '2017/01/02', '2017/01/01', 6, 4, 1);
-
+INSERT INTO Vol VALUES(16, 'Paris NY', 2, '2017/01/02', '2017/01/01', 5, 4, 1);
 
 INSERT INTO Place VALUES(8, 1, 2, 125);
 INSERT INTO Place VALUES(9, 1, 2, 500);
@@ -89,6 +83,8 @@ INSERT INTO Place VALUES(2, 2, 3, 99999);
 INSERT INTO Place VALUES(3, 2, 1, 550);
 INSERT INTO Place VALUES(3, 2, 2, 550);
 INSERT INTO Place VALUES(3, 2, 3, 550);
+INSERT INTO Place VALUES(16, 2, 3, 550);
+INSERT INTO Place VALUES(16, 1, 2, 550);
 
 INSERT INTO Escale VALUES(13, 1, 1);
 INSERT INTO Escale VALUES(14, 1, 1);
@@ -167,9 +163,13 @@ INSERT INTO Etat_Reservation VALUES(2, 'Non Valide');
 
 INSERT INTO Reservation VALUES(1, 'ezfzf', '2016/01/25', 1);
 INSERT INTO Reservation VALUES(2, 'zaza', '2016/01/25', 1);
+INSERT INTO Reservation VALUES(3, 'azr', '2016/01/26', 1);
+INSERT INTO Reservation VALUES(4, 'dg', '2014/01/25', 1);
 
 INSERT INTO Reservation_Personne VALUES(6, 1);
 INSERT INTO Reservation_Personne VALUES(3, 2);
+INSERT INTO Reservation_Personne VALUES(5, 3);
+INSERT INTO Reservation_Personne VALUES(6, 4);
 
 INSERT INTO Reservation_Vol VALUES(10, 1);
 INSERT INTO Reservation_Vol VALUES(3, 1);
