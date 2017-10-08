@@ -59,17 +59,17 @@ INSERT INTO Vol VALUES(1, 'CA1520', 1, '2017/01/01', '2017/01/01', 1, 2, 1);
 INSERT INTO Vol VALUES(2, 'AF2306', 2, '2018/02/12', '2018/02/12', 1, 2, 1);
 INSERT INTO Vol VALUES(3, 'AC1520', 3, '2017/12/25', '2017/12/25', 1, 7, 1);
 INSERT INTO Vol VALUES(4, 'fezzef', 1, '2017/01/01', '2017/01/01', 5, 4, 1);
-INSERT INTO Vol VALUES(5, 'ezfz', 1, '2017/12/26', '2017/12/26', 3, 5, 1);
-INSERT INTO Vol VALUES(6, 'fzef', 2, '2018/01/12', '2018/01/12', 3, 5, 1);
-INSERT INTO Vol VALUES(7, 'ff', 2, '2017/01/01', '2017/01/01', 6, 4, 1);
+INSERT INTO Vol VALUES(5, 'ezfzrg', 1, '2017/12/26', '2017/12/26', 3, 5, 1);
+INSERT INTO Vol VALUES(6, 'fzefgf', 2, '2018/01/12', '2018/01/12', 3, 5, 1);
+INSERT INTO Vol VALUES(7, 'ffpoiu', 2, '2017/01/01', '2017/01/01', 6, 4, 1);
 INSERT INTO Vol VALUES(8, 'zefzef', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
-INSERT INTO Vol VALUES(9, 'zfef', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
-INSERT INTO Vol VALUES(10, 'eekuy', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
-INSERT INTO Vol VALUES(11, 'yuk', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
+INSERT INTO Vol VALUES(9, 'zfehgf', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
+INSERT INTO Vol VALUES(10, 'eekuyn', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
+INSERT INTO Vol VALUES(11, 'yfghuk', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
 INSERT INTO Vol VALUES(12, 'yukyuk', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
-INSERT INTO Vol VALUES(13, 'toto', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
+INSERT INTO Vol VALUES(13, 'tottoo', 3, '2017/01/01', '2017/01/01', 4, 3, 1);
 INSERT INTO Vol VALUES(14, 'escale', 2, '2017/01/02', '2017/01/01', 6, 4, 1);
-INSERT INTO Vol VALUES(15, 'vc', 2, '2017/01/02', '2017/01/01', 6, 4, 1);
+INSERT INTO Vol VALUES(15, 'vcvcvc', 2, '2017/01/02', '2017/01/01', 6, 4, 1);
 INSERT INTO Vol VALUES(16, 'Paris NY', 2, '2017/01/02', '2017/01/01', 5, 4, 1);
 
 INSERT INTO Place VALUES(8, 1, 2, 125);
@@ -137,22 +137,22 @@ INSERT INTO Passport VALUES(4, 'Passeport 4');
 INSERT INTO Passport VALUES(5, 'Passeport 5');
 INSERT INTO Passport VALUES(6, 'Passeport 6');
 
-INSERT INTO Compte VALUES(1, 'Communisme', 'Staline');
-INSERT INTO Compte VALUES(2, 'Lourdeur', 'Tp');
-INSERT INTO Compte VALUES(3, 'Lourdeur', 'Tp');
-INSERT INTO Compte VALUES(4, 'Lourdeur', 'Tp');
-INSERT INTO Compte VALUES(5, 'Lourdeur', 'Tp');
-INSERT INTO Compte VALUES(6, 'Lourdeur', 'Tp');
+INSERT INTO Compte VALUES(1, 'courriel 1', 'password 1');
+INSERT INTO Compte VALUES(2, 'courriel 2', 'password 2');
+INSERT INTO Compte VALUES(3, 'courriel 3', 'password 3');
+INSERT INTO Compte VALUES(4, 'courriel 4', 'password 4');
+INSERT INTO Compte VALUES(5, 'courriel 5', 'password 5');
+INSERT INTO Compte VALUES(6, 'courriel 6', 'password 6');
 
 INSERT INTO Type_Personne VALUES(1, 'Client');
 INSERT INTO Type_Personne VALUES(2, 'Esclave');
 
-INSERT INTO Personne VALUES(1, 'Momo', 'fez', 1, 1, 1);
-INSERT INTO Personne VALUES(2, 'client', 'sefesf', 2, 2, 2);
-INSERT INTO Personne VALUES(3, 'paris', 'sefesf', 1, 3, 3);
-INSERT INTO Personne VALUES(4, 'pasparis', 'sefesf', 1, 4, 4);
-INSERT INTO Personne VALUES(5, 'jesaispas', 'sefesf', 1, 5, 5);
-INSERT INTO Personne VALUES(6, 'flemme', 'sefesf', 1, 6, 6);
+INSERT INTO Personne VALUES(1, 'Personne', '1', 1, 1, 1);
+INSERT INTO Personne VALUES(2, 'Personne', '2', 2, 2, 2);
+INSERT INTO Personne VALUES(3, 'Personne', '3', 1, 3, 3);
+INSERT INTO Personne VALUES(4, 'Personne', '4', 1, 4, 4);
+INSERT INTO Personne VALUES(5, 'Personne', '5', 1, 5, 5);
+INSERT INTO Personne VALUES(6, 'Personne', '6', 1, 6, 6);
 
 INSERT INTO Telephone VALUES(1, 1, 1, 321);
 
@@ -161,10 +161,10 @@ INSERT INTO Telephone_Personne VALUES(1, 1);
 INSERT INTO Etat_Reservation VALUES(1, 'Valide');
 INSERT INTO Etat_Reservation VALUES(2, 'Non Valide');
 
-INSERT INTO Reservation VALUES(1, 'ezfzf', '2016/01/25', 1);
-INSERT INTO Reservation VALUES(2, 'zaza', '2016/01/25', 1);
-INSERT INTO Reservation VALUES(3, 'azr', '2016/01/26', 1);
-INSERT INTO Reservation VALUES(4, 'dg', '2014/01/25', 1);
+INSERT INTO Reservation VALUES(1, 'r1', '2016/01/25', 1);
+INSERT INTO Reservation VALUES(2, 'r2', '2016/01/25', 1);
+INSERT INTO Reservation VALUES(3, 'r3', '2016/01/26', 1);
+INSERT INTO Reservation VALUES(4, 'r4', '2014/01/25', 1);
 
 INSERT INTO Reservation_Personne VALUES(6, 1);
 INSERT INTO Reservation_Personne VALUES(3, 2);
