@@ -30,7 +30,7 @@ DROP TABLE Aeroport;
 CREATE TABLE Aeroport (
 	ID        INTEGER,
 	CODE_IATA VARCHAR(3),
-	NOM       VARCHAR(100),
+	NOM       VARCHAR(100) NOT NULL,
 
 	CONSTRAINT Aeroport_pk PRIMARY KEY (ID),
 	CONSTRAINT Aeroport_code_iata_un UNIQUE(CODE_IATA)
@@ -38,14 +38,14 @@ CREATE TABLE Aeroport (
 
 CREATE TABLE Compagnie_Aerienne (
 	ID  INTEGER,
-	NOM VARCHAR(100),
+	NOM VARCHAR(100) NOT NULL,
 
 	CONSTRAINT Compagnie_Aerienne_pk PRIMARY KEY (ID)
 );
 
 CREATE TABLE Pays (
 	ID  INTEGER,
-	NOM VARCHAR(100),
+	NOM VARCHAR(100) NOT NULL,
 
 	CONSTRAINT Pays_pk PRIMARY KEY (ID)
 );
@@ -53,7 +53,7 @@ CREATE TABLE Pays (
 CREATE TABLE Ville (
 	ID      INTEGER,
 	PAYS    INTEGER,
-	NOM     VARCHAR(100),
+	NOM     VARCHAR(100) NOT NULL,
 
 	CONSTRAINT Ville_pk PRIMARY KEY (ID)
 );
@@ -67,14 +67,14 @@ CREATE TABLE Ville_Desservie (
 
 CREATE TABLE Province (
 	ID  INTEGER,
-	NOM VARCHAR(100),
+	NOM VARCHAR(100) NOT NULL,
 
 	CONSTRAINT Pays_pk PRIMARY KEY (ID)
 );
 
 CREATE TABLE Passport (
 	ID     INTEGER,
-	NUMERO VARCHAR(12),
+	NUMERO VARCHAR(12) NOT NULL,
 
 	CONSTRAINT Passport_pk PRIMARY KEY (ID),
 	CONSTRAINT Passport_no_un UNIQUE (NUMERO)
@@ -90,23 +90,23 @@ CREATE TABLE Compte (
 
 CREATE TABLE Type_Personne (
 	ID      INTEGER,
-	TYPE    VARCHAR(100),
+	TYPE    VARCHAR(100) NOT NULL,
 
 	CONSTRAINT Type_Personne_pk PRIMARY KEY(id)
 );
 
 CREATE TABLE Statut (
 	ID      INTEGER,
-	LIBELLE VARCHAR(100),
+	LIBELLE VARCHAR(100) NOT NULL,
 
 	CONSTRAINT Statut_pk PRIMARY KEY(ID)
 );
 
 CREATE TABLE Infos_Place (
 	ID          INTEGER,
-	RANGEE      CHAR(1),
-	SIEGE       INTEGER(2),
-	DISPONIBLE  CHAR(1),
+	RANGEE      CHAR(1) NOT NULL,
+	SIEGE       INTEGER(2) NOT NULL,
+	DISPONIBLE  CHAR(1) NOT NULL,
 
 	CONSTRAINT Infos_Place_pk PRIMARY KEY(ID),
 	CONSTRAINT Infos_Place_siege_un UNIQUE (SIEGE)
@@ -114,7 +114,7 @@ CREATE TABLE Infos_Place (
 
 CREATE TABLE Classe (
 	ID          INTEGER,
-	LIBELLE     VARCHAR(100),
+	LIBELLE     VARCHAR(100) NOT NULL,
 
 	CONSTRAINT Classe_pk PRIMARY KEY(ID)
 );
@@ -159,7 +159,7 @@ CREATE TABLE Adresse (
 
 CREATE TABLE Vol (
 	ID              INTEGER,
-	NUMERO         VARCHAR(15),
+	NUMERO          VARCHAR(15),
 	COMPAGNIE       INTEGER,
 	DEPART          DATE,
 	ARRIVEE         DATE,
@@ -175,7 +175,7 @@ CREATE TABLE Place (
 	VOL         INTEGER,
 	CLASSE      INTEGER,
 	PLACE       INTEGER,
-	PRIX        DECIMAL(7,2),
+	PRIX        DECIMAL(7,2) NOT NULL,
 
 	CONSTRAINT Adresse_Personne_pk PRIMARY KEY (VOL, CLASSE, PLACE)
 );
@@ -269,6 +269,16 @@ ALTER TABLE Place           ADD CONSTRAINT Place_Infos_Place_fk         FOREIGN 
 ALTER TABLE Reservation     ADD CONSTRAINT Reservation_Etat_Reservation_fk FOREIGN KEY (ETAT)             REFERENCES Etat_Reservation(ID);
 ALTER TABLE Reservation_Personne ADD CONSTRAINT Reservation_Personne_Personne_fk FOREIGN KEY (PERSONNE) REFERENCES Personne(ID);
 ALTER TABLE Reservation_Personne ADD CONSTRAINT Reservation_Personne_Reservation_fk FOREIGN KEY (RESERVATION) REFERENCES Reservation(ID);
+
+ALTER TABLE Vol             ADD CONSTRAINT Vol_dateorder_ck             CHECK (DEPART <  ARRIVEE);
+ALTER TABLE Infos_Escale    ADD CONSTRAINT Infos_escale_dateorder_ck    CHECK (DEPART <  ARRIVEE);
+ALTER TABLE Compte          ADD CONSTRAINT Compte_courriel_syntax_ck    CHECK (COURRIEL LIKE '%_@__%.__%');
+ALTER TABLE Passport        ADD CONSTRAINT Passport_numero_syntax_ck    CHECK (NUMERO LIKE '%[^A-Z0-9]%');
+ALTER TABLE Adresse         ADD CONSTRAINT Adress_codepostal_syntax_ck  CHECK (CODE_POSTAL LIKE '%[^A-Z0-9]%');
+ALTER TABLE Place           ADD CONSTRAINT Place_price_positive_ck      CHECK (PRIX > 0);
+ALTER TABLE Infos_Place     ADD CONSTRAINT Infos_place_rangee_ck        CHECK (RANGEE LIKE '[A-H]');
+ALTER TABLE Infos_Place     ADD CONSTRAINT Infos_place_siege_ck         CHECK (SIEGE > 0);
+
 
 
 
