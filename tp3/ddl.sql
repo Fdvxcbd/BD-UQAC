@@ -1,0 +1,234 @@
+DROP TABLE Telephone_Personne;
+DROP TABLE Reservation_Vol;
+DROP TABLE Reservation_Personne;
+DROP TABLE Reservation;
+DROP TABLE Etat_Reservation;
+DROP TABLE Adresse_Personne;
+DROP TABLE Personne;
+DROP TABLE Escale;
+DROP TABLE Place;
+DROP TABLE Vol;
+DROP TABLE Adresse;
+DROP TABLE Province_Pays;
+DROP TABLE Telephone;
+DROP TABLE Infos_Escale;
+DROP TABLE Classe;
+DROP TABLE Infos_Place;
+DROP TABLE Statut;
+DROP TABLE Type_Personne;
+DROP TABLE Compte;
+DROP TABLE Passport;
+DROP TABLE Province;
+DROP TABLE Ville_Desservie;
+DROP TABLE Ville;
+DROP TABLE Pays;
+DROP TABLE Compagnie_Aerienne;
+DROP TABLE Aeroport;
+
+
+
+CREATE TABLE Aeroport (
+	ID        INTEGER PRIMARY KEY,
+	CODE_IATA VARCHAR(3) UNIQUE,
+	NOM       VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Compagnie_Aerienne (
+	ID  INTEGER PRIMARY KEY,
+	NOM VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Pays (
+	ID  INTEGER PRIMARY KEY,
+	NOM VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Ville (
+	ID      INTEGER PRIMARY KEY,
+	PAYS    INTEGER,
+	NOM     VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Ville_Desservie (
+	AEROPORT INTEGER PRIMARY KEY,
+	VILLE    INTEGER
+);
+
+CREATE TABLE Province (
+	ID  INTEGER PRIMARY KEY,
+	NOM VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Passport (
+	ID     INTEGER PRIMARY KEY,
+	NUMERO VARCHAR(12) NOT NULL
+);
+
+CREATE TABLE Compte (
+	ID       INTEGER PRIMARY KEY,
+	COURRIEL VARCHAR(100),
+	PASSWORD VARCHAR(255)
+);
+
+CREATE TABLE Type_Personne (
+	ID      INTEGER PRIMARY KEY,
+	TYPE    VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Statut (
+	ID      INTEGER PRIMARY KEY,
+	LIBELLE VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Infos_Place (
+	ID          INTEGER PRIMARY KEY,
+	RANGEE      CHAR(1) NOT NULL,
+	SIEGE       DECIMAL(2) NOT NULL,
+	DISPONIBLE  CHAR(1) NOT NULL
+);
+
+CREATE TABLE Classe (
+	ID          INTEGER PRIMARY KEY,
+	LIBELLE     VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Infos_Escale (
+	ID      INTEGER PRIMARY KEY,
+	ARRIVEE DATE,
+	DEPART  DATE
+);
+
+CREATE TABLE Telephone (
+	ID          INTEGER PRIMARY KEY,
+	CODE_PAYS   DECIMAL(1),
+	CODE_REGION DECIMAL(3),
+	NUMERO     DECIMAL(7)
+);
+
+CREATE TABLE Province_Pays (
+	PAYS        INTEGER,
+	PROVINCE    INTEGER,
+	CONSTRAINT  pkPP PRIMARY KEY (PAYS, PROVINCE)
+);
+
+CREATE TABLE Adresse (
+	ID          INTEGER PRIMARY KEY,
+	NUMERO      INTEGER,
+	APP         CHAR(1),
+	RUE         VARCHAR(255),
+	VILLE       VARCHAR(255),
+	CODE_POSTAL VARCHAR(6),
+	PAYS        INTEGER,
+	PROVINCE    INTEGER
+);
+
+CREATE TABLE Vol (
+	ID              INTEGER PRIMARY KEY,
+	NUMERO          VARCHAR(15),
+	COMPAGNIE       INTEGER,
+	DEPART          DATE,
+	ARRIVEE         DATE,
+	AEROPORT_DEPART INTEGER,
+	AEROPORT_ARRIVE INTEGER,
+	STATUT          INTEGER
+);
+
+CREATE TABLE Place (
+	VOL         INTEGER PRIMARY KEY,
+	CLASSE      INTEGER,
+	PLACE       INTEGER,
+	PRIX        DECIMAL(7,2) NOT NULL
+);
+
+CREATE TABLE Escale (
+	VOL      INTEGER PRIMARY KEY,
+	AEROPORT INTEGER,
+	ESCALE   INTEGER
+);
+
+CREATE TABLE Personne (
+	ID            INTEGER PRIMARY KEY,
+	NOM           VARCHAR(100),
+	PRENOM        VARCHAR(100),
+	TYPE_PERSONNE INTEGER,
+	PASSEPORT     INTEGER,
+	COMPTE        INTEGER
+);
+
+CREATE TABLE Adresse_Personne (
+	ADRESSE     INTEGER,
+	PERSONNE    INTEGER,
+	CONSTRAINT  pkAP PRIMARY KEY (ADRESSE, PERSONNE)
+);
+
+CREATE TABLE Etat_Reservation(
+	ID      INTEGER PRIMARY KEY,
+	LIBELLE VARCHAR(100)
+);
+
+CREATE TABLE Reservation (
+	ID      INTEGER PRIMARY KEY,
+	NUMERO  VARCHAR(25),
+	pDATE    DATE,
+	ETAT    INTEGER
+);
+
+CREATE TABLE Reservation_Personne (
+	PERSONNE    INTEGER,
+	RESERVATION INTEGER,
+	CONSTRAINT  pkRP PRIMARY KEY (PERSONNE, RESERVATION)
+);
+
+CREATE TABLE Reservation_Vol (
+	VOL         INTEGER,
+	RESERVATION INTEGER,
+	CONSTRAINT  pkRV PRIMARY KEY (VOL, RESERVATION)
+);
+
+CREATE TABLE Telephone_Personne(
+	PERSONNE    INTEGER,
+	TELEPHONE   INTEGER,
+	CONSTRAINT  pkTP PRIMARY KEY (PERSONNE, TELEPHONE)
+);
+
+ALTER TABLE Ville_Desservie ADD CONSTRAINT Ville_Desservie_Aeroport_fk  FOREIGN KEY (AEROPORT)          REFERENCES Aeroport(ID);
+ALTER TABLE Ville_Desservie ADD CONSTRAINT Ville_Desservie_Ville_fk     FOREIGN KEY (VILLE)             REFERENCES Ville(ID);
+ALTER TABLE Ville           ADD CONSTRAINT Ville_Pays_fk                FOREIGN KEY (PAYS)              REFERENCES Pays(ID);
+ALTER TABLE Province_Pays   ADD CONSTRAINT Province_Pays_Pays_fk        FOREIGN KEY (PAYS)              REFERENCES Pays(ID);
+ALTER TABLE Province_Pays   ADD CONSTRAINT Province_Pays_Province_fk    FOREIGN KEY (PROVINCE)          REFERENCES Province(ID);
+ALTER TABLE Adresse         ADD CONSTRAINT Adresse_Province_Pays_fk     FOREIGN KEY (PAYS, PROVINCE)    REFERENCES Province_Pays(PAYS, PROVINCE);
+ALTER TABLE Escale          ADD CONSTRAINT Escale_Vol_fk                FOREIGN KEY (VOL)               REFERENCES Vol(ID);
+ALTER TABLE Escale          ADD CONSTRAINT Escale_Aeroport_fk           FOREIGN KEY (AEROPORT)          REFERENCES Aeroport(ID);
+ALTER TABLE Escale          ADD CONSTRAINT Escale_Infos_Escale          FOREIGN KEY (ESCALE)            REFERENCES Infos_Escale(ID);
+ALTER TABLE Vol             ADD CONSTRAINT Vol_Aeroport_Depart_fk       FOREIGN KEY (AEROPORT_DEPART)   REFERENCES Aeroport(ID);
+ALTER TABLE Vol             ADD CONSTRAINT Vol_Aeroport_Arrive_fk       FOREIGN KEY (AEROPORT_ARRIVE)   REFERENCES Aeroport(ID);
+ALTER TABLE Vol             ADD CONSTRAINT Vol_Compagnie_Aerienne_fk    FOREIGN KEY (COMPAGNIE)         REFERENCES Compagnie_Aerienne(ID);
+ALTER TABLE Vol             ADD CONSTRAINT Vol_Statut_fk                FOREIGN KEY (STATUT)            REFERENCES Statut(ID);
+ALTER TABLE Reservation_Vol ADD CONSTRAINT Reservation_Vol_Vol_fk       FOREIGN KEY (VOL)               REFERENCES Vol(ID);
+ALTER TABLE Reservation_Vol ADD CONSTRAINT Reservation_Vol_Rese_fk FOREIGN KEY (RESERVATION)     REFERENCES Reservation(ID);
+ALTER TABLE Personne        ADD CONSTRAINT Personne_Type_Personne_fk    FOREIGN KEY (TYPE_PERSONNE)     REFERENCES Type_Personne(ID);
+ALTER TABLE Personne        ADD CONSTRAINT Personne_Passport_fk         FOREIGN KEY (PASSEPORT)         REFERENCES Passport(ID);
+ALTER TABLE Personne        ADD CONSTRAINT Personne_Compte_fk           FOREIGN KEY (COMPTE)            REFERENCES Compte(ID);
+ALTER TABLE Place           ADD CONSTRAINT Place_Vol_fk                 FOREIGN KEY (VOL)               REFERENCES Vol(ID);
+ALTER TABLE Place           ADD CONSTRAINT Place_Classe_fk              FOREIGN KEY (CLASSE)            REFERENCES Classe(ID);
+ALTER TABLE Place           ADD CONSTRAINT Place_Infos_Place_fk         FOREIGN KEY (PLACE)             REFERENCES Infos_Place(ID);
+ALTER TABLE Reservation     ADD CONSTRAINT Reservation_Etat_Res_fk FOREIGN KEY (ETAT)             REFERENCES Etat_Reservation(ID);
+ALTER TABLE Reservation_Personne ADD CONSTRAINT Reservation_Per_Per_fk FOREIGN KEY (PERSONNE) REFERENCES Personne(ID);
+ALTER TABLE Reservation_Personne ADD CONSTRAINT Reservation_Per_Res_fk FOREIGN KEY (RESERVATION) REFERENCES Reservation(ID);
+
+ALTER TABLE Place           ADD CONSTRAINT Place_price_positive_ck      CHECK (PRIX > 0);
+ALTER TABLE Infos_Place     ADD CONSTRAINT Infos_place_siege_ck         CHECK (SIEGE > 0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
