@@ -1,0 +1,23 @@
+CREATE OR REPLACE FUNCTION avgVol(classe Classe.LIBELLE%TYPE)
+	RETURN FLOAT IS
+	BEGIN
+		SELECT AVG(P.PRIX) INTO moyenne
+		FROM Place P, Vol V, Statut S, Classe C
+		WHERE P.VOL = V.ID AND V.STATUT = S.ID AND S.LIBELLE LIKE '%Ouvert%'
+			AND P.CLASSE = C.ID AND C.LIBELLE = classe;
+		RETURN moyenne;
+	END;
+
+CREATE OR REPLACE PROCEDURE ListerVolsPlusChersAVG (
+	classe Classe.LIBELLE%TYPE
+) IS
+	BEGIN
+
+		SELECT DISTINCT V.*
+		FROM Vol V, PLACE P, STATUT S, CLASSE C
+		WHERE V.ID = P.VOL AND P.CLASSE = C.ID AND C.LIBELLE = classe
+			AND V.STATUT = S.ID AND S.LIBELLE LIKE '%Ouvert%'
+			AND P.Prix > avgVol(classe);
+
+	END;
+/
