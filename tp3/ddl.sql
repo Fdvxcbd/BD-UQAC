@@ -1,4 +1,3 @@
-DBMS_OUTPUT.PUT_LINE('DROP TABLE');
 DROP TABLE Telephone_Personne;
 DROP TABLE Reservation_Vol;
 DROP TABLE Reservation_Personne;
@@ -25,9 +24,7 @@ DROP TABLE Ville;
 DROP TABLE Pays;
 DROP TABLE Compagnie_Aerienne;
 DROP TABLE Aeroport;
-DBMS_OUTPUT.PUT_LINE('---------------------');
 
-DBMS_OUTPUT.PUT_LINE('CREATE TABLE TABLE');
 CREATE TABLE Aeroport (
 	ID        INTEGER PRIMARY KEY,
 	CODE_IATA VARCHAR(3) UNIQUE,
@@ -192,9 +189,7 @@ CREATE TABLE Telephone_Personne(
 	CONSTRAINT  pkTP PRIMARY KEY (PERSONNE, TELEPHONE)
 );
 
-DBMS_OUTPUT.PUT_LINE('---------------------');
 
-DBMS_OUTPUT.PUT_LINE('ADD CONSTRAINT');
 ALTER TABLE Ville_Desservie ADD CONSTRAINT Ville_Desservie_Aeroport_fk  FOREIGN KEY (AEROPORT)          REFERENCES Aeroport(ID);
 ALTER TABLE Ville_Desservie ADD CONSTRAINT Ville_Desservie_Ville_fk     FOREIGN KEY (VILLE)             REFERENCES Ville(ID);
 ALTER TABLE Ville           ADD CONSTRAINT Ville_Pays_fk                FOREIGN KEY (PAYS)              REFERENCES Pays(ID);
@@ -222,8 +217,6 @@ ALTER TABLE Reservation_Personne ADD CONSTRAINT Reservation_Per_Res_fk FOREIGN K
 
 ALTER TABLE Place           ADD CONSTRAINT Place_price_positive_ck      CHECK (PRIX > 0);
 ALTER TABLE Infos_Place     ADD CONSTRAINT Infos_place_siege_ck         CHECK (SIEGE > 0);
-
-DBMS_OUTPUT.PUT_LINE('---------------------');
 
 
 
