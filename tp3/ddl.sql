@@ -1,3 +1,4 @@
+DBMS_OUTPUT.PUT_LINE('DROP TABLE');
 DROP TABLE Telephone_Personne;
 DROP TABLE Reservation_Vol;
 DROP TABLE Reservation_Personne;
@@ -17,16 +18,16 @@ DROP TABLE Infos_Place;
 DROP TABLE Statut;
 DROP TABLE Type_Personne;
 DROP TABLE Compte;
-DROP TABLE Passport;
+DROP TABLE Passeport;
 DROP TABLE Province;
 DROP TABLE Ville_Desservie;
 DROP TABLE Ville;
 DROP TABLE Pays;
 DROP TABLE Compagnie_Aerienne;
 DROP TABLE Aeroport;
+DBMS_OUTPUT.PUT_LINE('---------------------');
 
-
-
+DBMS_OUTPUT.PUT_LINE('CREATE TABLE TABLE');
 CREATE TABLE Aeroport (
 	ID        INTEGER PRIMARY KEY,
 	CODE_IATA VARCHAR(3) UNIQUE,
@@ -59,7 +60,7 @@ CREATE TABLE Province (
 	NOM VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE Passport (
+CREATE TABLE Passeport (
 	ID     INTEGER PRIMARY KEY,
 	NUMERO VARCHAR(12) NOT NULL
 );
@@ -191,6 +192,9 @@ CREATE TABLE Telephone_Personne(
 	CONSTRAINT  pkTP PRIMARY KEY (PERSONNE, TELEPHONE)
 );
 
+DBMS_OUTPUT.PUT_LINE('---------------------');
+
+DBMS_OUTPUT.PUT_LINE('ADD CONSTRAINT');
 ALTER TABLE Ville_Desservie ADD CONSTRAINT Ville_Desservie_Aeroport_fk  FOREIGN KEY (AEROPORT)          REFERENCES Aeroport(ID);
 ALTER TABLE Ville_Desservie ADD CONSTRAINT Ville_Desservie_Ville_fk     FOREIGN KEY (VILLE)             REFERENCES Ville(ID);
 ALTER TABLE Ville           ADD CONSTRAINT Ville_Pays_fk                FOREIGN KEY (PAYS)              REFERENCES Pays(ID);
@@ -207,7 +211,7 @@ ALTER TABLE Vol             ADD CONSTRAINT Vol_Statut_fk                FOREIGN 
 ALTER TABLE Reservation_Vol ADD CONSTRAINT Reservation_Vol_Vol_fk       FOREIGN KEY (VOL)               REFERENCES Vol(ID);
 ALTER TABLE Reservation_Vol ADD CONSTRAINT Reservation_Vol_Rese_fk FOREIGN KEY (RESERVATION)     REFERENCES Reservation(ID);
 ALTER TABLE Personne        ADD CONSTRAINT Personne_Type_Personne_fk    FOREIGN KEY (TYPE_PERSONNE)     REFERENCES Type_Personne(ID);
-ALTER TABLE Personne        ADD CONSTRAINT Personne_Passport_fk         FOREIGN KEY (PASSEPORT)         REFERENCES Passport(ID);
+ALTER TABLE Personne        ADD CONSTRAINT Personne_Passeport_fk         FOREIGN KEY (PASSEPORT)         REFERENCES Passeport(ID);
 ALTER TABLE Personne        ADD CONSTRAINT Personne_Compte_fk           FOREIGN KEY (COMPTE)            REFERENCES Compte(ID);
 ALTER TABLE Place           ADD CONSTRAINT Place_Vol_fk                 FOREIGN KEY (VOL)               REFERENCES Vol(ID);
 ALTER TABLE Place           ADD CONSTRAINT Place_Classe_fk              FOREIGN KEY (CLASSE)            REFERENCES Classe(ID);
@@ -219,8 +223,7 @@ ALTER TABLE Reservation_Personne ADD CONSTRAINT Reservation_Per_Res_fk FOREIGN K
 ALTER TABLE Place           ADD CONSTRAINT Place_price_positive_ck      CHECK (PRIX > 0);
 ALTER TABLE Infos_Place     ADD CONSTRAINT Infos_place_siege_ck         CHECK (SIEGE > 0);
 
-
-
+DBMS_OUTPUT.PUT_LINE('---------------------');
 
 
 
