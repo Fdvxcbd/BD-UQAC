@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW FicheClient(nom, prenom, numpassport, adresse, telephone, nbReservation )
-	AS SELECT P.NOM, P.PRENOM, Passeport.NUMERO, '(' || T.CODE_PAYS || ') ' || T.CODE_REGION || '-' || T.NUMERO,A.APP || ' ' || A.NUMERO || ' ' || A.RUE || ' ' || A.VILLE, count(RP.PERSONNE)
+	AS SELECT DISTINCT P.NOM, P.PRENOM, Passeport.NUMERO, '(' || T.CODE_PAYS || ') ' || T.CODE_REGION || '-' || T.NUMERO,A.APP || ' ' || A.NUMERO || ' ' || A.RUE || ' ' || A.VILLE , count(RP.PERSONNE)
 	   FROM Personne P, Telephone_Personne TP, Telephone T,
 		   Adresse_Personne AP, Adresse A,
 		   Passeport,
@@ -12,7 +12,3 @@ CREATE OR REPLACE VIEW FicheClient(nom, prenom, numpassport, adresse, telephone,
 /
 
 SELECT * FROM FicheClient;
-
-SELECT DISTINCT p.*
-FROM Reservation_Personne RP, Reservation R, Personne P
-WHERE P.ID = RP.PERSONNE AND RP.RESERVATION = R.ID AND R.ETAT = 1;
