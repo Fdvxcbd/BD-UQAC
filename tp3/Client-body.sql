@@ -40,9 +40,9 @@ CREATE OR REPLACE PACKAGE BODY Client AS
 		UPDATE Infos_Place
 		SET Disponible = 'F'
 		WHERE idPlace.Place = Infos_Place.id;
-		INSERT INTO Reservation VALUES (5, 'r5', TO_DATE('1/1/2017', 'DD/mm/YYYY'), 1);
-		INSERT INTO Reservation_Vol VALUES (idPlace.vol, 5);
-		INSERT INTO Reservation_Personne VALUES (ppersonne, 5);
+		INSERT INTO Reservation VALUES ((Select max(id)+1 from Reservation), 'r5', TO_DATE('1/1/2017', 'DD/mm/YYYY'), 1);
+		INSERT INTO Reservation_Vol VALUES (idPlace.vol, (Select max(id) from Reservation));
+		INSERT INTO Reservation_Personne VALUES (ppersonne, (Select max(id) from Reservation));
 
 		EXCEPTION
 		WHEN pasDePlace THEN
