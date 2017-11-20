@@ -49,9 +49,6 @@ BEGIN
 	SELECT ID INTO v_statut_ouvert FROM STATUT WHERE LIBELLE LIKE '%Ouvert%';
 	dbms_output.put_line('ID : ' || v_statut_ouvert);
 
-
-
-
 	INSERT INTO VOL(ID, NUMERO, COMPAGNIE, DEPART, ARRIVEE, AEROPORT_DEPART, AEROPORT_ARRIVE, STATUT)
 		VALUES ((Select max(id)+1 from vol), p_numero, v_id_compagnie, TO_DATE(p_date_depart, 'DD/mm/YYYY'), TO_DATE(p_date_arrivee, 'DD/mm/YYYY'), v_aeroport_depart, v_aeroport_arivee, v_statut_ouvert);
 

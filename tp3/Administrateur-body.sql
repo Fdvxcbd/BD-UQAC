@@ -48,8 +48,8 @@ CREATE OR REPLACE PACKAGE BODY Administrateur AS
 		SELECT ID INTO v_statut_ouvert FROM STATUT WHERE LIBELLE LIKE '%Ouvert%';
 		dbms_output.put_line('ID : ' || v_statut_ouvert);
 
-		INSERT INTO VOL(NUMERO, COMPAGNIE, DEPART, ARRIVEE, AEROPORT_DEPART, AEROPORT_ARRIVE, STATUT)
-		VALUES (p_numero, v_id_compagnie, p_ville_depart, p_ville_arrivee, v_aeroport_depart, v_aeroport_arivee, v_statut_ouvert);
+		INSERT INTO VOL(ID, NUMERO, COMPAGNIE, DEPART, ARRIVEE, AEROPORT_DEPART, AEROPORT_ARRIVE, STATUT)
+		VALUES ((Select max(id)+1 from vol), p_numero, v_id_compagnie, TO_DATE(p_date_depart, 'DD/mm/YYYY'), TO_DATE(p_date_arrivee, 'DD/mm/YYYY'), v_aeroport_depart, v_aeroport_arivee, v_statut_ouvert);
 
 		EXCEPTION
 		WHEN depart_notfound THEN
@@ -58,6 +58,37 @@ CREATE OR REPLACE PACKAGE BODY Administrateur AS
 		dbms_output.put_line('Votre ville d arrivee n existe pas ou ne possede pas d aeroport');
 		WHEN compagnie_notfound THEN
 		dbms_output.put_line('Compagnie non trouvee');
+	END OuvrirVol;
+	------------------------------------------------------------
+
+	FUNCTION avgVol(p_classe Classe.LIBELLE%TYPE)
+	RETURN PLS_INTEGER IS
+		moyenne PLS_INTEGER;
+	BEGIN
+		SELECT AVG(P.PRIX) INTO moyenne
+		FROM Place P, Vol V, Statut S, Classe C
+		WHERE P.VOL = V.ID AND V.STATUT = S.ID AND S.LIBELLE LIKE '%Ouvert%'
+		      AND P.CLASSE = C.ID AND C.LIBELLE = p_classe;
+		RETURN moyenne;
+	END avgVol;
+
+	PROCEDURE ListerVolsPlusChersAVG (
+		p_classe Classe.LIBELLE%TYPE
+	) AS
+		moyenne PLS_INTEGER;
+	BEGIN
+		moyenne := avgVol(p_classe);
+		FOR rec IN (
+		SELECT V.*
+		FROM Vol V, PLACE P, STATUT S, CLASSE C
+		WHERE V.ID = P.VOL AND P.CLASSE = C.ID AND C.LIBELLE = p_classe
+		      AND V.STATUT = S.ID AND S.LIBELLE LIKE '%Ouvert%'
+		      AND P.Prix > moyenne
+		) LOOP
+			dbms_output.put_line(rec.NUMERO || ' ' || rec.COMPAGNIE || ' ' || rec.DEPART || ' ' || rec.ARRIVEE
+			                     || ' ' || rec.AEROPORT_DEPART || ' ' || rec.AEROPORT_ARRIVE || ' ' || rec.STATUT);
+		END LOOP;
+
 	END;
 
 END Administrateur;

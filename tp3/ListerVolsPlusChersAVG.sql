@@ -1,30 +1,28 @@
 !clear
 
-CREATE OR REPLACE FUNCTION avgVol(classe Classe.LIBELLE%TYPE)
-	RETURN FLOAT IS
-	moyenne FLOAT;
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE FUNCTION avgVol(p_classe Classe.LIBELLE%TYPE)
+	RETURN PLS_INTEGER IS
+	moyenne PLS_INTEGER;
 	BEGIN
 		SELECT AVG(P.PRIX) INTO moyenne
 		FROM Place P, Vol V, Statut S, Classe C
 		WHERE P.VOL = V.ID AND V.STATUT = S.ID AND S.LIBELLE LIKE '%Ouvert%'
-			AND P.CLASSE = C.ID AND C.LIBELLE = classe;
+			AND P.CLASSE = C.ID AND C.LIBELLE = p_classe;
 		RETURN moyenne;
 	END;
 /
-SHOW ERROR;
-
 
 CREATE OR REPLACE PROCEDURE ListerVolsPlusChersAVG (
-	classe Classe.LIBELLE%TYPE
+	p_classe Classe.LIBELLE%TYPE
 ) AS
-	moyenne FLOAT;
+	moyenne PLS_INTEGER;
 	BEGIN
-		moyenne := avgVol(classe);
-		dbms_output.put_line(moyenne);
+		moyenne := avgVol(p_classe);
 		FOR rec IN (
-			SELECT DISTINCT V.*
+			SELECT V.*
 			FROM Vol V, PLACE P, STATUT S, CLASSE C
-			WHERE V.ID = P.VOL AND P.CLASSE = C.ID AND C.LIBELLE = classe
+			WHERE V.ID = P.VOL AND P.CLASSE = C.ID AND C.LIBELLE = p_classe
 		      AND V.STATUT = S.ID AND S.LIBELLE LIKE '%Ouvert%'
 		      AND P.Prix > moyenne
 		) LOOP
