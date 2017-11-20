@@ -49,8 +49,11 @@ BEGIN
 	SELECT ID INTO v_statut_ouvert FROM STATUT WHERE LIBELLE LIKE '%Ouvert%';
 	dbms_output.put_line('ID : ' || v_statut_ouvert);
 
-	INSERT INTO VOL(NUMERO, COMPAGNIE, DEPART, ARRIVEE, AEROPORT_DEPART, AEROPORT_ARRIVE, STATUT)
-		VALUES (p_numero, v_id_compagnie, p_ville_depart, p_ville_arrivee, v_aeroport_depart, v_aeroport_arivee, v_statut_ouvert);
+
+
+
+	INSERT INTO VOL(ID, NUMERO, COMPAGNIE, DEPART, ARRIVEE, AEROPORT_DEPART, AEROPORT_ARRIVE, STATUT)
+		VALUES ((Select max(id)+1 from vol), p_numero, v_id_compagnie, TO_DATE(p_date_depart, 'DD/mm/YYYY'), TO_DATE(p_date_arrivee, 'DD/mm/YYYY'), v_aeroport_depart, v_aeroport_arivee, v_statut_ouvert);
 
 EXCEPTION
 WHEN depart_notfound THEN
@@ -62,8 +65,10 @@ WHEN compagnie_notfound THEN
 END;
 /
 
+EXECUTE OuvrirVol('ifhihfz', TO_DATE('10/09/2017', 'DD/mm/YYYY'), TO_DATE('25/09/2017', 'DD/mm/YYYY'), 'Cressa', 'Macerata', 'Compagnie 1');
+
+Select * from vol;
+
 SHOW ERROR;
 
-EXECUTE OuvrirVol('NEWVOL', TO_DATE('10/09/2017', 'DD/mm/YYYY'), TO_DATE('25/09/2017', 'DD/mm/YYYY'), 'Cressa', 'Macerata', 'Compagnie 1');
 
-SELECT * FROM VOL WHERE NUMERO = 'NEWVOL';
