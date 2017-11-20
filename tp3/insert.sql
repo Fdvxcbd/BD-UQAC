@@ -55,6 +55,10 @@ INSERT INTO Aeroport VALUES(5, 'PRS', 'Paris');
 INSERT INTO Aeroport VALUES(6, 'VCV', 'Vancouver');
 INSERT INTO Aeroport VALUES(7, 'LHV', 'La Havane');
 
+
+INSERT INTO Vol VALUES(26, 'OIHFIH', 2, TO_DATE('2/12/2017', 'DD/mm/YYYY'), TO_DATE('3/12/2017', 'DD/mm/YYYY'), 1, 3, 1);
+
+
 INSERT INTO Vol VALUES(1, 'CA1520', 1, TO_DATE('1/1/2017', 'DD/mm/YYYY'), TO_DATE('1/1/2017', 'DD/mm/YYYY'), 1, 2, 1);
 INSERT INTO Vol VALUES(2, 'AF2306', 2, TO_DATE('2/12/2018', 'DD/mm/YYYY'), TO_DATE('2/12/2018', 'DD/mm/YYYY'), 1, 2, 1);
 INSERT INTO Vol VALUES(3, 'AC1520', 3, TO_DATE('25/12/2017', 'DD/mm/YYYY'), TO_DATE('25/12/2017', 'DD/mm/YYYY'), 1, 7, 1);
@@ -144,6 +148,7 @@ INSERT INTO Pays (NOM) VALUES ('Åland Islands');
 INSERT INTO Pays (NOM) VALUES ('Burundi');
 INSERT INTO Pays (NOM) VALUES ('Jersey');
 
+
 INSERT INTO Ville (PAYS,NOM) VALUES (17,'Castel Ritaldi');
 INSERT INTO Ville (PAYS,NOM) VALUES (40,'Cressa');
 INSERT INTO Ville (PAYS,NOM) VALUES (1,'Macerata');
@@ -211,7 +216,6 @@ INSERT INTO Ville (PAYS,NOM) VALUES (6,'Montefalcone nel Sannio');
 INSERT INTO Ville (PAYS,NOM) VALUES (42,'Bingen');
 INSERT INTO Ville (PAYS,NOM) VALUES (46,'Martelange');
 INSERT INTO Ville (PAYS,NOM) VALUES (4,'Ficulle');
-INSERT INTO Ville (PAYS,NOM) VALUES (3,'Penna in Teverina');
 INSERT INTO Ville (PAYS,NOM) VALUES (1,'Hamme');
 INSERT INTO Ville (PAYS,NOM) VALUES (8,'Huesca');
 INSERT INTO Ville (PAYS,NOM) VALUES (48,'Rycroft');
@@ -222,7 +226,6 @@ INSERT INTO Ville (PAYS,NOM) VALUES (31,'Bousval');
 INSERT INTO Ville (PAYS,NOM) VALUES (38,'Ribnitz-Damgarten');
 INSERT INTO Ville (PAYS,NOM) VALUES (23,'Cochin');
 INSERT INTO Ville (PAYS,NOM) VALUES (13,'Hervey Bay');
-INSERT INTO Ville (PAYS,NOM) VALUES (3,'Chittoor');
 INSERT INTO Ville (PAYS,NOM) VALUES (15,'Ludwigshafen');
 INSERT INTO Ville (PAYS,NOM) VALUES (41,'Vlezenbeek');
 INSERT INTO Ville (PAYS,NOM) VALUES (23,'Cavasso Nuovo');
@@ -252,6 +255,8 @@ INSERT INTO Ville_Desservie VALUES(4, 5);
 INSERT INTO Ville_Desservie VALUES(5, 6);
 INSERT INTO Ville_Desservie VALUES(6, 7);
 INSERT INTO Ville_Desservie VALUES(7, 8);
+INSERT INTO Ville_Desservie VALUES(7, 98);
+INSERT INTO Ville_Desservie VALUES(8, 99);
 
 INSERT INTO Province (NOM) VALUES ('Corse');
 INSERT INTO Province (NOM) VALUES ('Champagne-Ardenne');
@@ -1103,3 +1108,6 @@ INSERT INTO Reservation_Vol VALUES(10, 1);
 INSERT INTO Reservation_Vol VALUES(3, 1);
 INSERT INTO Reservation_Vol VALUES(3, 2);
 INSERT INTO Reservation_Vol VALUES(5, 2);
+
+
+
