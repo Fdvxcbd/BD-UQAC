@@ -20,13 +20,13 @@ CREATE OR REPLACE PROCEDURE ListerVolsPlusChersAVG (
 	BEGIN
 		moyenne := avgVol(p_classe);
 		FOR rec IN (
-			SELECT V.*
+			SELECT V.*, P.Prix
 			FROM Vol V, PLACE P, STATUT S, CLASSE C
 			WHERE V.ID = P.VOL AND P.CLASSE = C.ID AND C.LIBELLE = p_classe
 		      AND V.STATUT = S.ID AND S.LIBELLE LIKE '%Ouvert%'
 		      AND P.Prix > moyenne
 		) LOOP
-		dbms_output.put_line(rec.NUMERO || ' ' || rec.COMPAGNIE || ' ' || rec.DEPART || ' ' || rec.ARRIVEE
+		dbms_output.put_line('Prix ' ||rec.Prix ||' '||rec.NUMERO || ' ' || rec.COMPAGNIE || ' ' || rec.DEPART || ' ' || rec.ARRIVEE
 		                     || ' ' || rec.AEROPORT_DEPART || ' ' || rec.AEROPORT_ARRIVE || ' ' || rec.STATUT);
 		END LOOP;
 
